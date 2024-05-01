@@ -2,11 +2,13 @@ import React, { useContext, useRef, useState } from "react";
 import "./Contact.css";
 import emailjs from "@emailjs/browser";
 import { themeContext } from "../../Context";
+
 const Contact = () => {
   const theme = useContext(themeContext);
   const darkMode = theme.state.darkMode;
-  const form = useRef();
+  const form = useRef(null); // Initialize form ref with null
   const [done, setDone] = useState(false);
+
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -14,14 +16,14 @@ const Contact = () => {
       .sendForm(
         "service_rxq49ub",
         "template_ujsoi5r",
-        form.current,
+        form.current, // Pass form ref
         "HRCPXC5JF0a79YJyB"
       )
       .then(
         (result) => {
           console.log(result.text);
           setDone(true);
-          form.reset();
+          form.current.reset(); // Access the form DOM element using current
         },
         (error) => {
           console.log(error.text);
